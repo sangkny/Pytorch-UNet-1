@@ -1,3 +1,20 @@
+# Unet: Practice
+```angular2html
+This repository has come from the following repository.
+More utils and its applications have been added
+# tested on py36-pytor1120-tf1150-gpu.yml
+- python 3.6
+- pytorch 1.12.0
+- future 0.18.2
+
+# updates:
+dataset.py
+- mask image is converted to gray image with 'Image.open().convert('L') 
+- 1channel->3channel inputs -> back into original state 
+         if len(img_nd.shape) == 2: # 1channel -> 3 channels by sangkny
+            # img_nd = np.expand_dims(img_nd, axis=2)
+            img_nd = np.repeat(img_nd[:, :, np.newaxis], 3, axis=2)
+```
 # UNet: semantic segmentation with PyTorch
 
 ![input and output for a random image in the test dataset](https://framapic.org/OcE8HlU6me61/KNTt8GFQzxDR.png)

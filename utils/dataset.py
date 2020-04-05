@@ -31,7 +31,7 @@ class BasicDataset(Dataset):
 
         img_nd = np.array(pil_img)
 
-        if len(img_nd.shape) == 2:
+        if len(img_nd.shape) == 2: # 1channel -> 3 channels by sangkny -> back to original
             img_nd = np.expand_dims(img_nd, axis=2)
 
         # HWC to CHW
@@ -50,7 +50,7 @@ class BasicDataset(Dataset):
             f'Either no mask or multiple masks found for the ID {idx}: {mask_file}'
         assert len(img_file) == 1, \
             f'Either no image or multiple images found for the ID {idx}: {img_file}'
-        mask = Image.open(mask_file[0])
+        mask = Image.open(mask_file[0]).convert('L') # mask image is converted to Gray by sangkny
         img = Image.open(img_file[0])
 
         assert img.size == mask.size, \
