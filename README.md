@@ -4,9 +4,12 @@ This repository has come from the following repository.
 More utils and its applications have been added
 # tested on py36-pytor1120-tf1150-gpu.yml
 - python 3.6
-- pytorch 1.12.0
+- cudatoolkit 10.1
+- pytorch 1.5.1
+- tensorflow-gpu 1.14.0
+- tensorboard 1.14.0
 - future 0.18.2
-
+- combine anaconda (pytorch) pip (tensorflow)
 # updates:
 dataset.py
 - mask image is converted to gray image with 'Image.open().convert('L') 
@@ -14,6 +17,13 @@ dataset.py
          if len(img_nd.shape) == 2: # 1channel -> 3 channels by sangkny
             # img_nd = np.expand_dims(img_nd, axis=2)
             img_nd = np.repeat(img_nd[:, :, np.newaxis], 3, axis=2)
+
+train.py 
+- loss.backward()에서 죽어서.. cuda -> cpu 로 바꾸어 보니... 제대로 돌아가고 있음(cuda function 문제, 버전등), 너무 오래 걸림.
+- 보통은 python 2.x 와 python 3. 일때.. data[0] /data의 사용을 잘 못 하여 문제가 되는 데... 이때는 loss.item() 또는 loss.data를 사용하면 됨.
+- 최종적으로 cudaToolkit 9.2 -> 10.1 그리고 이에 맞게 pyTorch 1.2.0 -> 1.5.0, tensorflow(tensorboard) 1.10.0 -> 1.14.0 으로 수정후 정상적으로 돌아감
+- 본 repository의 특징은 Summary 를 이용해서 나름 그래픽컬하게 진행상황을 보여주는 것이어서 tensorboar 1.14.0에 맞게 구성을 해야 함.
+
 ```
 # UNet: semantic segmentation with PyTorch
 
